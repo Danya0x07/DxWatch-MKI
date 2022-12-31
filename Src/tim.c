@@ -200,12 +200,12 @@ void HAL_TIM_IC_MspInit(TIM_HandleTypeDef* tim_icHandle)
     /**TIM3 GPIO Configuration
     PB4     ------> TIM3_CH1
     */
-    GPIO_InitStruct.Pin = IR_EYE_Pin;
+    GPIO_InitStruct.Pin = GPIO_PIN_4;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF1_TIM3;
-    HAL_GPIO_Init(IR_EYE_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM3_MspInit 1 */
 
@@ -254,7 +254,7 @@ void HAL_TIM_IC_MspDeInit(TIM_HandleTypeDef* tim_icHandle)
     /**TIM3 GPIO Configuration
     PB4     ------> TIM3_CH1
     */
-    HAL_GPIO_DeInit(IR_EYE_GPIO_Port, IR_EYE_Pin);
+    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_4);
 
   /* USER CODE BEGIN TIM3_MspDeInit 1 */
 
