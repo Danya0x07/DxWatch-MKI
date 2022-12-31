@@ -1,6 +1,5 @@
 #include "sh1106.h"
-#include <main.h>
-#include <spi.h>
+#include "sh1106_port.h"
 
 #define CMD_SET_COL_ADDR_L  0x00  // 0x0..0xF
 #define CMD_SET_COL_ADDR_H  0x10  // 0x0..0xF
@@ -73,15 +72,15 @@ static const uint8_t INIT_SEQUENCE[] = {
 
 static void SendCommand(uint8_t cmd)
 {
-    LL_GPIO_ResetOutputPin(DC_GPIO_Port, DC_Pin);
-    LL_GPIO_ResetOutputPin(CS_GPIO_Port, CS_Pin);
+    DC_LOW();
+    CS_LOW();
     SPI_TransferByte(cmd);
-    LL_GPIO_SetOutputPin(CS_GPIO_Port, CS_Pin);
+    CS_HIGH();
 }
 
 void SH1106_Init(void)
 {
-    for (int i = 0; i < sizeof(INIT_SEQUENCE); i++) {
+    for (uint_fast8_t i = 0; i < sizeof(INIT_SEQUENCE); i++) {
         SendCommand(INIT_SEQUENCE[i]);
     }
 }
@@ -100,28 +99,28 @@ void SH1106_SetCursor(uint8_t row, uint8_t col)
 
 void SH1106_WriteByte(uint8_t data)
 {
-    LL_GPIO_SetOutputPin(DC_GPIO_Port, DC_Pin);
-    LL_GPIO_ResetOutputPin(CS_GPIO_Port, CS_Pin);
+    DC_HIGH();
+    CS_LOW();
     SPI_TransferByte(data);
-    LL_GPIO_SetOutputPin(CS_GPIO_Port, CS_Pin);
+    CS_HIGH();
 }
 
-void SH1106_WriteBytes(uint8_t *data, uint16_t len)
+void SH1106_WriteBytes(const uint8_t *data, uint16_t len)
 {
-    LL_GPIO_SetOutputPin(DC_GPIO_Port, DC_Pin);
-    LL_GPIO_ResetOutputPin(CS_GPIO_Port, CS_Pin);
+    DC_HIGH();
+    CS_LOW();
     SPI_TransferBytes(NULL, data, len);
-    LL_GPIO_SetOutputPin(CS_GPIO_Port, CS_Pin);
+    CS_HIGH();
 }
 
-void SH1106_FullOn(bool on)
+void SH1106_SetFullOn(bool on)
 {
     SendCommand(CMD_FULL_ON | on);
 }
 
-void SH1106_Invert(bool invert)
+void SH1106_SetInverse(bool inverse)
 {
-    SendCommand(CMD_INVERT | invert);
+    SendCommand(CMD_INVERT | inverse);
 }
 
 void SH1106_SetEnable(bool enable)
