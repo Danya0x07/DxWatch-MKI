@@ -39,7 +39,8 @@ extern "C" {
 void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void UART_SendString(const char *s);
+void UART_SendChar(char c);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

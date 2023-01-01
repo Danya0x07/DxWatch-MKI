@@ -59,7 +59,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+#ifndef PIO_UNIT_TESTING
 /* USER CODE END 0 */
 
 /**
@@ -107,7 +107,7 @@ int main(void)
         for (uint8_t col = 0; col < 128; col++) {
             SH1106_WriteByte(0);
         }
-    }
+    }/*
     HAL_Delay(2000);
     
     for (uint8_t row = 0, i = 1; row < 8; row++, i = 1) {
@@ -123,7 +123,16 @@ int main(void)
         SH1106_SetOffset(offset);
         HAL_Delay(200);
     }
-    SH1106_SetOffset(0);
+    SH1106_SetOffset(0); */
+    SH1106_SetContrast(255);
+    void PrintString(const char *s);
+    extern const char phrase1[];
+    extern const char phrase2[];
+    SH1106_SetCursor(1, 0);
+    PrintString(phrase1);
+    SH1106_SetCursor(2, 50);
+    PrintString(phrase2);
+    for(;;);
     bool s = false;
   /* USER CODE END 2 */
 
@@ -135,7 +144,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_GPIO_TogglePin(LED_BUILTIN_GPIO_Port, LED_BUILTIN_Pin);
-    SH1106_FullOn(s);
+    SH1106_SetFullOn(s);
     s = !s;
     HAL_Delay(2000);
   }
@@ -192,7 +201,7 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+#endif // PIO_UNIT_TESTING
 /* USER CODE END 4 */
 
 /**

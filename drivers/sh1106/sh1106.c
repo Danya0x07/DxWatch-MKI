@@ -55,6 +55,7 @@
 static const uint8_t INIT_SEQUENCE[] = {
     CMD_DISPLAY_ON | 0,
     CMD_INVERT | 0,
+    CMD_FULL_ON | 0,
     CMD_CLKDIV_OSCFREQ_CTRL, 0x80,
     CMD_MUX_RATIO_CTRL, 63,
     CMD_DISPLAY_OFFSET_CTRL, 0,

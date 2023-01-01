@@ -7,6 +7,11 @@
 
 #include <main.h>
 
+#define SH1106_NUM_ROWS 8
+#define SH1106_NUM_COLS 128
+#define SH1106_MAX_ROW  (SH1106_NUM_ROWS - 1)
+#define SH1106_MAX_COL  (SH1106_NUM_COLS - 1)
+
 // Call after SPI initialization.
 void SH1106_Init(void);
 
