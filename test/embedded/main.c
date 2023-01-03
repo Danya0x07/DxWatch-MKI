@@ -12,7 +12,7 @@
 extern void Global_Setup(void);
 extern void Global_TearDown(void);
 extern void InfiniteLoop(void);
-extern void (*const TEST_CASES[])(void);
+extern void (*const testCases[])(void);
 extern const int NUM_OF_TEST_CASES;
 
 void SystemClock_Config(void)
@@ -77,7 +77,8 @@ int main(void)
     UNITY_BEGIN();
     Global_Setup();
     for (int i = 0; i < NUM_OF_TEST_CASES; i++) {
-        RUN_TEST(TEST_CASES[i]);
+        if (testCases[i])
+            RUN_TEST(testCases[i]);
     }
     Global_TearDown();
     UNITY_END();

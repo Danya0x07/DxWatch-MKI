@@ -53,18 +53,6 @@ void MX_GPIO_Init(void)
   LL_GPIO_ResetOutputPin(LED_BUILTIN_GPIO_Port, LED_BUILTIN_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(W_GPIO_Port, W_Pin);
-
-  /**/
-  LL_GPIO_ResetOutputPin(S_GPIO_Port, S_Pin);
-
-  /**/
-  LL_GPIO_ResetOutputPin(HOLD_GPIO_Port, HOLD_Pin);
-
-  /**/
-  LL_GPIO_ResetOutputPin(CS_GPIO_Port, CS_Pin);
-
-  /**/
   LL_GPIO_ResetOutputPin(DC_GPIO_Port, DC_Pin);
 
   /**/
@@ -75,6 +63,18 @@ void MX_GPIO_Init(void)
 
   /**/
   LL_GPIO_ResetOutputPin(FLASHLIGHT_GPIO_Port, FLASHLIGHT_Pin);
+
+  /**/
+  LL_GPIO_SetOutputPin(W_GPIO_Port, W_Pin);
+
+  /**/
+  LL_GPIO_SetOutputPin(S_GPIO_Port, S_Pin);
+
+  /**/
+  LL_GPIO_SetOutputPin(HOLD_GPIO_Port, HOLD_Pin);
+
+  /**/
+  LL_GPIO_SetOutputPin(CS_GPIO_Port, CS_Pin);
 
   /**/
   GPIO_InitStruct.Pin = LED_BUILTIN_Pin;

@@ -5,9 +5,9 @@
 #include <main.h>
 
 #define EXPORT_TEST_CASES(...) \
-void (*const TEST_CASES[])(void) = { \
+void (*const testCases[])(void) = { \
     __VA_ARGS__ \
 }; \
-const int NUM_OF_TEST_CASES = sizeof(TEST_CASES) / sizeof(TEST_CASES[0])
+const int NUM_OF_TEST_CASES = sizeof(testCases) / sizeof(testCases[0])
 
 #endif // INC_EMBEDDED_COMMON
