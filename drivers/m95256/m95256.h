@@ -1,7 +1,7 @@
 /** M95256-WMN SPI EEPROM driver. */
 
-#ifndef INC_DRIVERS_M95256
-#define INC_DRIVERS_M95256
+#ifndef _DRIVERS_M95256_H
+#define _DRIVERS_M95256_H
 
 #include <main.h>
 
@@ -27,4 +27,4 @@ M95_Error_t M95256_ReadArray(uint16_t addr, uint8_t *arr, uint16_t len);
 M95_Error_t M95256_SetWriteProtection(M95_WriteProtection_t protection);
 void M95256_SetHardwareProtection(bool enable);
 
-#endif // INC_DRIVERS_M95256
+#endif // _DRIVERS_M95256_H

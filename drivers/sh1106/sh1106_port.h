@@ -1,5 +1,5 @@
-#ifndef INC_DRIVERS_SH1106_PORT
-#define INC_DRIVERS_SH1106_PORT
+#ifndef _DRIVERS_SH1106_PORT
+#define _DRIVERS_SH1106_PORT
 
 #include <spi.h>
 

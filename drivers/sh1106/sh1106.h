@@ -2,8 +2,8 @@
  * Communication via 4-wire SPI.
  */
 
-#ifndef INC_DRIVERS_SH1106
-#define INC_DRIVERS_SH1106
+#ifndef _DRIVERS_SH1106_H
+#define _DRIVERS_SH1106_H
 
 #include <main.h>
 
@@ -35,4 +35,4 @@ void SH1106_SetContrast(uint8_t contrast);
  * offset: 0..63 */
 void SH1106_SetOffset(uint8_t offset);
 
-#endif // INC_DRIVERS_SH1106
+#endif // _DRIVERS_SH1106_H

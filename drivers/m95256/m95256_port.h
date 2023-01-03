@@ -1,5 +1,5 @@
-#ifndef INC_DRIVERS_M95256_PORT_H
-#define INC_DRIVERS_M95256_PORT_H
+#ifndef _DRIVERS_M95256_PORT_H
+#define _DRIVERS_M95256_PORT_H
 
 #include <spi.h>
 
@@ -13,4 +13,4 @@
 #define W_IS_LOW()  (!LL_GPIO_IsOutputPinSet(W_GPIO_Port, W_Pin))
 #define GET_MS()    HAL_GetTick()
 
-#endif // INC_DRIVERS_M95256_PORT_H
+#endif // _DRIVERS_M95256_PORT_H

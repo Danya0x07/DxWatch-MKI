@@ -1,5 +1,5 @@
-#ifndef INC_EMBEDDED_COMMON
-#define INC_EMBEDDED_COMMON
+#ifndef _EMBEDDED_COMMON_H
+#define _EMBEDDED_COMMON_H
 
 #include <unity.h>
 #include <main.h>
@@ -10,4 +10,4 @@ void (*const testCases[])(void) = { \
 }; \
 const int NUM_OF_TEST_CASES = sizeof(testCases) / sizeof(testCases[0])
 
-#endif // INC_EMBEDDED_COMMON
+#endif // _EMBEDDED_COMMON_H
