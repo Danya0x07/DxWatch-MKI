@@ -50,87 +50,87 @@ void MX_GPIO_Init(void)
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
 
   /**/
-  LL_GPIO_ResetOutputPin(LED_BUILTIN_GPIO_Port, LED_BUILTIN_Pin);
+  LL_GPIO_ResetOutputPin(BUILTIN_LED_GPIO_Port, BUILTIN_LED_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(DC_GPIO_Port, DC_Pin);
+  LL_GPIO_ResetOutputPin(SH1106_DC_GPIO_Port, SH1106_DC_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(VIBRO_GPIO_Port, VIBRO_Pin);
+  LL_GPIO_ResetOutputPin(MOTOR_GPIO_Port, MOTOR_Pin);
 
   /**/
   LL_GPIO_ResetOutputPin(PWR_LATCH_GPIO_Port, PWR_LATCH_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(FLASHLIGHT_GPIO_Port, FLASHLIGHT_Pin);
+  LL_GPIO_ResetOutputPin(FLASH_LED_GPIO_Port, FLASH_LED_Pin);
 
   /**/
-  LL_GPIO_SetOutputPin(W_GPIO_Port, W_Pin);
+  LL_GPIO_SetOutputPin(M95_W_GPIO_Port, M95_W_Pin);
 
   /**/
-  LL_GPIO_SetOutputPin(S_GPIO_Port, S_Pin);
+  LL_GPIO_SetOutputPin(M95_S_GPIO_Port, M95_S_Pin);
 
   /**/
-  LL_GPIO_SetOutputPin(HOLD_GPIO_Port, HOLD_Pin);
+  LL_GPIO_SetOutputPin(M95_HOLD_GPIO_Port, M95_HOLD_Pin);
 
   /**/
-  LL_GPIO_SetOutputPin(CS_GPIO_Port, CS_Pin);
+  LL_GPIO_SetOutputPin(SH1106_CS_GPIO_Port, SH1106_CS_Pin);
 
   /**/
-  GPIO_InitStruct.Pin = LED_BUILTIN_Pin;
+  GPIO_InitStruct.Pin = BUILTIN_LED_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(LED_BUILTIN_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(BUILTIN_LED_GPIO_Port, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = W_Pin;
+  GPIO_InitStruct.Pin = M95_W_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(W_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(M95_W_GPIO_Port, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = S_Pin;
+  GPIO_InitStruct.Pin = M95_S_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(S_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(M95_S_GPIO_Port, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = HOLD_Pin;
+  GPIO_InitStruct.Pin = M95_HOLD_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(HOLD_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(M95_HOLD_GPIO_Port, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = CS_Pin;
+  GPIO_InitStruct.Pin = SH1106_CS_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(CS_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(SH1106_CS_GPIO_Port, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = DC_Pin;
+  GPIO_InitStruct.Pin = SH1106_DC_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(DC_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(SH1106_DC_GPIO_Port, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = VIBRO_Pin;
+  GPIO_InitStruct.Pin = MOTOR_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(VIBRO_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(MOTOR_GPIO_Port, &GPIO_InitStruct);
 
   /**/
   GPIO_InitStruct.Pin = BTN_1_Pin;
@@ -153,12 +153,12 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(PWR_LATCH_GPIO_Port, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = FLASHLIGHT_Pin;
+  GPIO_InitStruct.Pin = FLASH_LED_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(FLASHLIGHT_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(FLASH_LED_GPIO_Port, &GPIO_InitStruct);
 
   /**/
   GPIO_InitStruct.Pin = BTN_2_Pin;

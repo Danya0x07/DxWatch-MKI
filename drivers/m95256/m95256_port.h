@@ -3,14 +3,14 @@
 
 #include <spi.h>
 
-#define S_LOW()     LL_GPIO_ResetOutputPin(S_GPIO_Port, S_Pin)
-#define S_HIGH()    LL_GPIO_SetOutputPin(S_GPIO_Port, S_Pin)
-#define W_LOW()     LL_GPIO_ResetOutputPin(W_GPIO_Port, W_Pin)
-#define W_HIGH()    LL_GPIO_SetOutputPin(W_GPIO_Port, W_Pin)
-#define H_LOW()     LL_GPIO_ResetOutputPin(HOLD_GPIO_Port, HOLD_Pin)
-#define H_HIGH()    LL_GPIO_SetOutputPin(HOLD_GPIO_Port, HOLD_Pin)
+#define S_LOW()     LL_GPIO_ResetOutputPin(M95_S_GPIO_Port, M95_S_Pin)
+#define S_HIGH()    LL_GPIO_SetOutputPin(M95_S_GPIO_Port, M95_S_Pin)
+#define W_LOW()     LL_GPIO_ResetOutputPin(M95_W_GPIO_Port, M95_W_Pin)
+#define W_HIGH()    LL_GPIO_SetOutputPin(M95_W_GPIO_Port, M95_W_Pin)
+#define H_LOW()     LL_GPIO_ResetOutputPin(M95_HOLD_GPIO_Port, M95_HOLD_Pin)
+#define H_HIGH()    LL_GPIO_SetOutputPin(M95_HOLD_GPIO_Port, M95_HOLD_Pin)
 
-#define W_IS_LOW()  (!LL_GPIO_IsOutputPinSet(W_GPIO_Port, W_Pin))
+#define W_IS_LOW()  (!LL_GPIO_IsOutputPinSet(M95_W_GPIO_Port, M95_W_Pin))
 #define GET_MS()    HAL_GetTick()
 
 #endif // _DRIVERS_M95256_PORT_H

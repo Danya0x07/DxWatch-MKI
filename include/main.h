@@ -69,22 +69,24 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_BUILTIN_Pin LL_GPIO_PIN_0
-#define LED_BUILTIN_GPIO_Port GPIOA
-#define W_Pin LL_GPIO_PIN_1
-#define W_GPIO_Port GPIOA
-#define S_Pin LL_GPIO_PIN_2
-#define S_GPIO_Port GPIOA
-#define HOLD_Pin LL_GPIO_PIN_3
-#define HOLD_GPIO_Port GPIOA
-#define CS_Pin LL_GPIO_PIN_4
-#define CS_GPIO_Port GPIOA
-#define DC_Pin LL_GPIO_PIN_0
-#define DC_GPIO_Port GPIOB
-#define ACC_MSR_Pin LL_GPIO_PIN_1
-#define ACC_MSR_GPIO_Port GPIOB
-#define VIBRO_Pin LL_GPIO_PIN_8
-#define VIBRO_GPIO_Port GPIOA
+#define BUILTIN_LED_Pin LL_GPIO_PIN_0
+#define BUILTIN_LED_GPIO_Port GPIOA
+#define M95_W_Pin LL_GPIO_PIN_1
+#define M95_W_GPIO_Port GPIOA
+#define M95_S_Pin LL_GPIO_PIN_2
+#define M95_S_GPIO_Port GPIOA
+#define M95_HOLD_Pin LL_GPIO_PIN_3
+#define M95_HOLD_GPIO_Port GPIOA
+#define SH1106_CS_Pin LL_GPIO_PIN_4
+#define SH1106_CS_GPIO_Port GPIOA
+#define SH1106_DC_Pin LL_GPIO_PIN_0
+#define SH1106_DC_GPIO_Port GPIOB
+#define BATTERY_Pin LL_GPIO_PIN_1
+#define BATTERY_GPIO_Port GPIOB
+#define MOTOR_Pin LL_GPIO_PIN_8
+#define MOTOR_GPIO_Port GPIOA
+#define IR_LED_Pin LL_GPIO_PIN_13
+#define IR_LED_GPIO_Port GPIOA
 #define BTN_1_Pin LL_GPIO_PIN_15
 #define BTN_1_GPIO_Port GPIOA
 #define BTN_0_Pin LL_GPIO_PIN_3
@@ -93,8 +95,8 @@ void Error_Handler(void);
 #define IR_EYE_GPIO_Port GPIOB
 #define PWR_LATCH_Pin LL_GPIO_PIN_5
 #define PWR_LATCH_GPIO_Port GPIOB
-#define FLASHLIGHT_Pin LL_GPIO_PIN_6
-#define FLASHLIGHT_GPIO_Port GPIOB
+#define FLASH_LED_Pin LL_GPIO_PIN_6
+#define FLASH_LED_GPIO_Port GPIOB
 #define BTN_2_Pin LL_GPIO_PIN_7
 #define BTN_2_GPIO_Port GPIOB
 #define BTN_3_Pin LL_GPIO_PIN_8
