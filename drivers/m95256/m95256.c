@@ -62,10 +62,10 @@ static inline bool WriteCycleInProgress(void)
 
 static bool WriteCycleWithinTimeout(void)
 {
-    uint32_t startTime = GET_MS();
+    uint32_t startTime = MS_GET();
 
     while (WriteCycleInProgress()) {
-        if (GET_MS() - startTime > WRITE_CYCLE_TIMEOUT)
+        if (MS_GET() - startTime > WRITE_CYCLE_TIMEOUT)
             return false;
     }
     return true;

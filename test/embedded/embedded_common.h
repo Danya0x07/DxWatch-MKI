@@ -10,4 +10,6 @@ void (*const testCases[])(void) = { \
 }; \
 const int NUM_OF_TEST_CASES = sizeof(testCases) / sizeof(testCases[0])
 
+void blink(int times, int duration);
+
 #endif // _EMBEDDED_COMMON_H

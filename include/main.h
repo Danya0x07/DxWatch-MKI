@@ -30,6 +30,7 @@ extern "C" {
 #include "stm32f0xx_hal.h"
 
 #include "stm32f0xx_ll_spi.h"
+#include "stm32f0xx_ll_tim.h"
 #include "stm32f0xx_ll_usart.h"
 #include "stm32f0xx_ll_rcc.h"
 #include "stm32f0xx_ll_system.h"

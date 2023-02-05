@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "irtim.h"
 #include "rtc.h"
 #include "spi.h"
 #include "tim.h"
@@ -29,6 +30,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <sh1106.h>
+#include <ir_raw.h>
+#include <ir_nec.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,45 +98,13 @@ int main(void)
   MX_TIM17_Init();
   MX_ADC_Init();
   MX_SPI1_Init();
-  MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_USB_PCD_Init();
+  MX_IRTIM_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
-  LL_SPI_Enable(SPI1);
-  SH1106_Init();
-  
-    for (uint8_t row = 0; row < 8; row++) {
-        SH1106_SetCursor(row, 0);
-        for (uint8_t col = 0; col < 128; col++) {
-            SH1106_WriteByte(0);
-        }
-    }/*
-    HAL_Delay(2000);
-    
-    for (uint8_t row = 0, i = 1; row < 8; row++, i = 1) {
-        SH1106_SetCursor(row, 0);
-        for (uint8_t col = 0; col < 128; col++) {
-            SH1106_WriteByte(i++);
-            HAL_Delay(5);
-        }
-    }
-    HAL_Delay(2000);
-  
-    for (uint8_t offset = 0; offset < 64; offset++) {
-        SH1106_SetOffset(offset);
-        HAL_Delay(200);
-    }
-    SH1106_SetOffset(0); */
-    SH1106_SetContrast(255);
-    void PrintString(const char *s);
-    extern const char phrase1[];
-    extern const char phrase2[];
-    SH1106_SetCursor(1, 0);
-    PrintString(phrase1);
-    SH1106_SetCursor(2, 50);
-    PrintString(phrase2);
-    for(;;);
-    bool s = false;
+  IR_RecordRaw(NULL, 4, 34, 34);
+  NEC_BuildRaw(NULL, NULL);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -144,9 +115,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     HAL_GPIO_TogglePin(BUILTIN_LED_GPIO_Port, BUILTIN_LED_Pin);
-    SH1106_SetFullOn(s);
-    s = !s;
-    HAL_Delay(2000);
+    HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }

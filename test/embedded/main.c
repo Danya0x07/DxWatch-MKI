@@ -8,6 +8,7 @@
 #include <usart.h>
 #include <usb.h>
 #include <gpio.h>
+#include <irtim.h>
 
 extern void Global_Setup(void);
 extern void Global_TearDown(void);
@@ -30,8 +31,7 @@ void SystemClock_Config(void)
     RCC_OscInitStruct.HSI14State = RCC_HSI14_ON;
     RCC_OscInitStruct.HSI14CalibrationValue = 16;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
-    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-    {
+    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
         Error_Handler();
     }
 
@@ -42,8 +42,7 @@ void SystemClock_Config(void)
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
-    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
-    {
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
         Error_Handler();
     }
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_RTC;
@@ -51,8 +50,7 @@ void SystemClock_Config(void)
     PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_HSE_DIV32;
     PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
 
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-    {
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK) {
         Error_Handler();
     }
 }
@@ -61,18 +59,17 @@ int main(void)
 {
     HAL_Init();
     SystemClock_Config();
-    
+
     MX_GPIO_Init();
     MX_RTC_Init();
     MX_TIM16_Init();
     MX_TIM17_Init();
     MX_ADC_Init();
     MX_SPI1_Init();
-    MX_TIM3_Init();
     MX_USART1_UART_Init();
     MX_USB_PCD_Init();
-
-    LL_SPI_Enable(SPI1);
+    MX_IRTIM_Init();
+    MX_TIM14_Init();
 
     UNITY_BEGIN();
     Global_Setup();

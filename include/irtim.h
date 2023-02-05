@@ -1,13 +1,13 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    tim.h
+  * @file    irtim.h
   * @brief   This file contains all the function prototypes for
-  *          the tim.c file
+  *          the irtim.c file
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2022 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __TIM_H__
-#define __TIM_H__
+#ifndef __IRTIM_H__
+#define __IRTIM_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,17 +36,18 @@ extern "C" {
 
 /* USER CODE END Private defines */
 
-void MX_TIM14_Init(void);
-void MX_TIM16_Init(void);
-void MX_TIM17_Init(void);
+void MX_IRTIM_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-void DelayUs(uint16_t us);
+void IRTIM_SetCarrierFrequency(uint8_t kHz);
+void IRTIM_EnableCarrier(void);
+void IRTIM_DisableCarrier(void);
+void IRTIM_SetLedState(bool state);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __TIM_H__ */
+#endif /* __IRTIM_H__ */
 

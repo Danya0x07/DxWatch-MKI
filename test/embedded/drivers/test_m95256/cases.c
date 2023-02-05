@@ -8,16 +8,6 @@
 #define TEST_EEPROM_HALF_ADDR   0x5000
 #define TEST_EEPROM_START_ADDR  0x3500
 
-static void blink(int times, int duration)
-{
-    while (times--) {
-        BUILTIN_LED_ON();
-        HAL_Delay(duration);
-        BUILTIN_LED_OFF();
-        HAL_Delay(duration / 2);
-    }
-}
-
 void Global_Setup(void)
 {
     blink(1, 2000);

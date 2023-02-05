@@ -86,7 +86,7 @@ void MX_SPI1_Init(void)
   LL_SPI_SetStandard(SPI1, LL_SPI_PROTOCOL_MOTOROLA);
   LL_SPI_EnableNSSPulseMgt(SPI1);
   /* USER CODE BEGIN SPI1_Init 2 */
-
+  LL_SPI_Enable(SPI1);
   /* USER CODE END SPI1_Init 2 */
 
 }
