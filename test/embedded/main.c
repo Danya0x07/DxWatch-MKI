@@ -9,6 +9,7 @@
 #include <usb.h>
 #include <gpio.h>
 #include <irtim.h>
+#include <dma.h>
 
 extern void Global_Setup(void);
 extern void Global_TearDown(void);
@@ -61,6 +62,7 @@ int main(void)
     SystemClock_Config();
 
     MX_GPIO_Init();
+    MX_DMA_Init();
     MX_RTC_Init();
     MX_TIM16_Init();
     MX_TIM17_Init();
