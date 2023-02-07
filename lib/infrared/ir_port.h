@@ -1,7 +1,7 @@
 #ifndef _IR_PORT_H
 #define _IR_PORT_H
 
-#ifndef PIO_UNIT_TESTING
+#ifndef DESKTOP_TEST
 
 #include <gpio.h>
 #include <irtim.h>

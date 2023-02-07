@@ -22,6 +22,7 @@
 #include "stm32f0xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "builtin_led.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -139,6 +140,26 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f0xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles RTC interrupt through EXTI lines 17, 19 and 20.
+  */
+void RTC_IRQHandler(void)
+{
+  /* USER CODE BEGIN RTC_IRQn 0 */
+#ifdef PIO_UNIT_TESTING
+    if(LL_RTC_IsActiveFlag_ALRA(RTC)) {
+        BUILTIN_LED_ON();
+        LL_RTC_ClearFlag_ALRA(RTC);
+        LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_17);
+    }
+#endif
+  /* USER CODE END RTC_IRQn 0 */
+
+  /* USER CODE BEGIN RTC_IRQn 1 */
+
+  /* USER CODE END RTC_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 

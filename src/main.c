@@ -103,8 +103,7 @@ int main(void)
   MX_IRTIM_Init();
   MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
-  IR_RecordRaw(NULL, 4, 34, 34);
-  NEC_BuildRaw(NULL, NULL);
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -114,8 +113,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_GPIO_TogglePin(BUILTIN_LED_GPIO_Port, BUILTIN_LED_Pin);
-    HAL_Delay(1000);
+    
+    
   }
   /* USER CODE END 3 */
 }

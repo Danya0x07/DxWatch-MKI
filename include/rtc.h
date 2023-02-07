@@ -32,8 +32,6 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern RTC_HandleTypeDef hrtc;
-
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
@@ -41,7 +39,13 @@ extern RTC_HandleTypeDef hrtc;
 void MX_RTC_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void RTC_SetDateTime(LL_RTC_DateTypeDef *date,LL_RTC_TimeTypeDef *time);
+void RTC_GetDateTime(LL_RTC_DateTypeDef *date,LL_RTC_TimeTypeDef *time);
+void RTC_ALARM_Disable(void);
+void RTC_ALARM_Enable(void);
+bool RTC_ALARM_Enabled(void);
+void RTC_ALARM_GetTime(LL_RTC_TimeTypeDef *time);
+void RTC_ALARM_SetTime(LL_RTC_TimeTypeDef *time);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
