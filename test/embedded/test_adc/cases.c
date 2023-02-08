@@ -23,7 +23,6 @@ void tearDown(void) {}
 void Test_Measuring(void)
 {
     uint16_t voltage;
-    int16_t temperature;
     
     testFlag = false;
     ADC_PerformMeasurements();
@@ -32,11 +31,8 @@ void Test_Measuring(void)
         HAL_Delay(100);
     }
     voltage = ADC_ReadSupplyVoltage();
-    temperature = ADC_ReadJunctionTemperature();
-    UART_SendString("\n\nVoltage: ");
+    UART_SendString("\nVoltage: ");
     UART_SendString(itoa(voltage, strbuff, 10));
-    UART_SendString("\tTemperature: ");
-    UART_SendString(itoa(temperature, strbuff, 10));
     HAL_Delay(3000);
 }
 

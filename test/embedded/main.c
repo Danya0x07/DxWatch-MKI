@@ -62,7 +62,6 @@ int main(void)
     SystemClock_Config();
 
     MX_GPIO_Init();
-    MX_DMA_Init();
     MX_RTC_Init();
     MX_TIM16_Init();
     MX_TIM17_Init();
