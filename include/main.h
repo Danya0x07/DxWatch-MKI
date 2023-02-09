@@ -93,6 +93,7 @@ void Error_Handler(void);
 #define BTN_1_GPIO_Port GPIOA
 #define BTN_0_Pin LL_GPIO_PIN_3
 #define BTN_0_GPIO_Port GPIOB
+#define BTN_0_EXTI_IRQn EXTI2_3_IRQn
 #define IR_EYE_Pin LL_GPIO_PIN_4
 #define IR_EYE_GPIO_Port GPIOB
 #define PWR_LATCH_Pin LL_GPIO_PIN_5

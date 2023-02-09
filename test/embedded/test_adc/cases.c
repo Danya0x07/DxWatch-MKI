@@ -4,7 +4,7 @@
 #include <builtin_led.h>
 #include <stdlib.h>
 
-volatile bool testFlag = false;
+extern volatile bool testFlag;
 static char strbuff[32];
 
 void Global_Setup(void)

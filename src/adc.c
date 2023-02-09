@@ -24,7 +24,7 @@
 static volatile uint16_t supplyVoltage;
 
 #ifdef PIO_UNIT_TESTING
-extern volatile bool testFlag;
+volatile bool testFlag;
 #endif
 /* USER CODE END 0 */
 
