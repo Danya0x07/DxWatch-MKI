@@ -47,34 +47,34 @@ void MX_IRTIM_Init(void)
 
 void IRTIM_SetCarrierFrequency(uint8_t kHz)
 {
-	uint16_t timerInputkHz = HAL_RCC_GetSysClockFreq() / (LL_TIM_GetPrescaler(TIM_CARR) + 1) / 1000;
+    uint16_t timerInputkHz = HAL_RCC_GetSysClockFreq() / (LL_TIM_GetPrescaler(TIM_CARR) + 1) / 1000;
     uint16_t arr = timerInputkHz / kHz - 1;
-	LL_TIM_SetAutoReload(TIM_CARR, arr);
-	LL_TIM_OC_SetCompareCH1(TIM_CARR, arr * 3 / 5);
+    LL_TIM_SetAutoReload(TIM_CARR, arr);
+    LL_TIM_OC_SetCompareCH1(TIM_CARR, arr * 3 / 5);
 }
 
 void IRTIM_EnableCarrier(void)
 {
-	LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_13, LL_GPIO_MODE_ALTERNATE);
-	TIM_ENV->CCMR1 &= ~TIM_CCMR1_OC1M_0;
-	LL_TIM_EnableCounter(TIM_CARR);
-	LL_TIM_EnableCounter(TIM_ENV);
+    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_13, LL_GPIO_MODE_ALTERNATE);
+    TIM_ENV->CCMR1 &= ~TIM_CCMR1_OC1M_0;
+    LL_TIM_EnableCounter(TIM_CARR);
+    LL_TIM_EnableCounter(TIM_ENV);
 }
 
 void IRTIM_DisableCarrier(void)
 {
-	LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
-	LL_TIM_DisableCounter(TIM_ENV);
-	LL_TIM_DisableCounter(TIM_CARR);
+    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_13, LL_GPIO_MODE_OUTPUT);
+    LL_TIM_DisableCounter(TIM_ENV);
+    LL_TIM_DisableCounter(TIM_CARR);
     LL_TIM_SetCounter(TIM_CARR, 0);
     LL_TIM_SetCounter(TIM_ENV, 0);
 }
 
 void IRTIM_SetLedState(bool state)
 {
-	if (state)
-		TIM_ENV->CCMR1 |= TIM_CCMR1_OC1M_0;
-	else
-		TIM_ENV->CCMR1 &= ~TIM_CCMR1_OC1M_0;
+    if (state)
+        TIM_ENV->CCMR1 |= TIM_CCMR1_OC1M_0;
+    else
+        TIM_ENV->CCMR1 &= ~TIM_CCMR1_OC1M_0;
 }
 /* USER CODE END 1 */

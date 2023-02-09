@@ -7,15 +7,15 @@
 #define NEC_FRAME_LEN	(NEC_BITS * 2 + 3)  // 2 header durations, 1 last pulse
 
 struct NecPacket {
-	uint8_t address;
-	uint8_t command;
+    uint8_t address;
+    uint8_t command;
 };
 
 typedef enum {
-	NecParsingStatus_OK,
-	NecParsingStatus_BITS_MISMATCH,
-	NecParsingStatus_BAD_RAWLEN,
-	NecParsingStatus_BAD_PULSE,
+    NecParsingStatus_OK,
+    NecParsingStatus_BITS_MISMATCH,
+    NecParsingStatus_BAD_RAWLEN,
+    NecParsingStatus_BAD_PULSE,
 } NecParsingStatus_t;
 
 NecParsingStatus_t NEC_ParseRaw(const uint16_t durations[], uint16_t len, struct NecPacket *packet);

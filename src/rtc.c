@@ -101,20 +101,20 @@ void MX_RTC_Init(void)
 
 void RTC_SetDateTime(LL_RTC_DateTypeDef *date,LL_RTC_TimeTypeDef *time)
 {	
-	LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BIN, time);
-	LL_RTC_DATE_Init(RTC, LL_RTC_FORMAT_BIN, date);	
-	LL_RTC_BAK_SetRegister(RTC, LL_RTC_BKP_DR0, 0x32F2);
+    LL_RTC_TIME_Init(RTC, LL_RTC_FORMAT_BIN, time);
+    LL_RTC_DATE_Init(RTC, LL_RTC_FORMAT_BIN, date);	
+    LL_RTC_BAK_SetRegister(RTC, LL_RTC_BKP_DR0, 0x32F2);
 }
 
 void RTC_GetDateTime(LL_RTC_DateTypeDef *date,LL_RTC_TimeTypeDef *time)
 {
-	time->Hours   = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_TIME_GetHour(RTC));
-	time->Minutes = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_TIME_GetMinute(RTC));
-	time->Seconds = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_TIME_GetSecond(RTC));
-	
-	date->Year  = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetYear(RTC));
-	date->Month = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetMonth(RTC));
-	date->Day   = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetDay(RTC));
+    time->Hours   = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_TIME_GetHour(RTC));
+    time->Minutes = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_TIME_GetMinute(RTC));
+    time->Seconds = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_TIME_GetSecond(RTC));
+    
+    date->Year  = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetYear(RTC));
+    date->Month = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetMonth(RTC));
+    date->Day   = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetDay(RTC));
 }
 
 void RTC_ALARM_Disable(void)
