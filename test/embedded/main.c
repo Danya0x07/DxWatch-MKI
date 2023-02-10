@@ -6,7 +6,7 @@
 #include <spi.h>
 #include <tim.h>
 #include <usart.h>
-#include <usb.h>
+#include <usb_device.h>
 #include <gpio.h>
 #include <irtim.h>
 #include <dma.h>
@@ -68,9 +68,9 @@ int main(void)
     MX_ADC_Init();
     MX_SPI1_Init();
     MX_USART1_UART_Init();
-    MX_USB_PCD_Init();
     MX_IRTIM_Init();
     MX_TIM14_Init();
+    MX_USB_DEVICE_Init();
 
     UNITY_BEGIN();
     Global_Setup();

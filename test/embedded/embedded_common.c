@@ -1,6 +1,8 @@
 #include "embedded_common.h"
 #include <builtin_led.h>
 
+volatile uint32_t testVariable;
+
 void blink(int times, int duration)
 {
     while (times--) {

@@ -10,6 +10,7 @@ void (*const testCases[])(void) = { \
 }; \
 const int NUM_OF_TEST_CASES = sizeof(testCases) / sizeof(testCases[0])
 
+extern volatile uint32_t testVariable;
 void blink(int times, int duration);
 
 #endif // _EMBEDDED_COMMON_H

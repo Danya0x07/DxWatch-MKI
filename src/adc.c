@@ -24,7 +24,7 @@
 static volatile uint16_t supplyVoltage;
 
 #ifdef PIO_UNIT_TESTING
-volatile bool testFlag;
+#include <embedded_common.h>
 #endif
 /* USER CODE END 0 */
 
@@ -150,7 +150,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
     supplyVoltage = HAL_ADC_GetValue(hadc);
 #ifdef PIO_UNIT_TESTING
-    testFlag = true;
+    testVariable = 1;
 #else
 
 #endif

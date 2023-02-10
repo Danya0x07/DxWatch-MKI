@@ -4,7 +4,6 @@
 #include <builtin_led.h>
 #include <stdlib.h>
 
-extern volatile bool testFlag;
 static char strbuff[32];
 
 void Global_Setup(void)
@@ -24,9 +23,9 @@ void Test_Measuring(void)
 {
     uint16_t voltage;
     
-    testFlag = false;
+    testVariable = 0;
     ADC_PerformMeasurements();
-    while (!testFlag) {
+    while (!testVariable) {
         BUILTIN_LED_TOGGLE();
         HAL_Delay(100);
     }
