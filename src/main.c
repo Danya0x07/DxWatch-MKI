@@ -29,9 +29,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <sh1106.h>
-#include <ir_raw.h>
-#include <ir_nec.h>
+#include <builtin_led.h>
+#include <FreeRTOS.h>
+#include <task.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +57,35 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
+void vApplicationIdleHook(void)
+{
 
+}
+
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
+{
+
+}
+
+void vApplicationMallocFailedHook(void)
+{
+    
+}
+
+void vAssertCalled(char *file, uint32_t line)
+{
+    for (;;) {
+
+    }
+}
+
+void Task_BlinkLed(void *arg)
+{
+    for (;;) {
+        BUILTIN_LED_TOGGLE();
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -103,7 +131,9 @@ int main(void)
   MX_TIM14_Init();
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
-  
+  xTaskCreate(Task_BlinkLed,
+              "bl", 128, NULL, 0, NULL);
+    vTaskStartScheduler();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -171,6 +201,27 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 #endif // PIO_UNIT_TESTING
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM3 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM3) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
