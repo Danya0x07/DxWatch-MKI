@@ -10,6 +10,7 @@
 #include <gpio.h>
 #include <irtim.h>
 #include <dma.h>
+#include <buttons.h>
 
 extern void Global_Setup(void);
 extern void Global_TearDown(void);
@@ -71,6 +72,7 @@ int main(void)
     MX_IRTIM_Init();
     MX_TIM14_Init();
     MX_USB_DEVICE_Init();
+    Button0_DisableInterrupt();
 
     UNITY_BEGIN();
     Global_Setup();
