@@ -22,6 +22,16 @@
 #include "stm32f0xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#ifdef PIO_UNIT_TESTING
+#   include <embedded_common.h>
+#   include <string.h>
+#endif
+
+#include <FreeRTOS.h>
+#include "queue.h"
+#include "task.h"
+#include "os.h"
+#include "adc.h"
 #include "builtin_led.h"
 /* USER CODE END Includes */
 
@@ -61,7 +71,8 @@ extern ADC_HandleTypeDef hadc;
 extern TIM_HandleTypeDef htim3;
 
 /* USER CODE BEGIN EV */
-
+extern QueueHandle_t queueSystemEvents;
+extern TaskHandle_t taskTerminalService;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -76,9 +87,10 @@ void NMI_Handler(void)
 
   /* USER CODE END NonMaskableInt_IRQn 0 */
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
-  while (1)
-  {
-  }
+    for (;;) {
+        BUILTIN_LED_TOGGLE();
+        HAL_Delay(4000);
+    }
   /* USER CODE END NonMaskableInt_IRQn 1 */
 }
 
@@ -93,6 +105,8 @@ void HardFault_Handler(void)
   while (1)
   {
     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+    BUILTIN_LED_TOGGLE();
+    HAL_Delay(5000);
     /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }
@@ -150,13 +164,23 @@ __weak void SysTick_Handler(void)
 void RTC_IRQHandler(void)
 {
   /* USER CODE BEGIN RTC_IRQn 0 */
-#ifdef PIO_UNIT_TESTING
+
     if(LL_RTC_IsActiveFlag_ALRA(RTC)) {
+
+#ifdef PIO_UNIT_TESTING
         BUILTIN_LED_ON();
+#else
+        BaseType_t xHigherPriorityTaskWoken;
+
+        xQueueSendFromISR(queueSystemEvents, &((struct SystemEvent) {
+            .type = SysEvent_ALARM
+        }), &xHigherPriorityTaskWoken);
+#endif
+
         LL_RTC_ClearFlag_ALRA(RTC);
         LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_17);
     }
-#endif
+
   /* USER CODE END RTC_IRQn 0 */
 
   /* USER CODE BEGIN RTC_IRQn 1 */
@@ -170,15 +194,23 @@ void RTC_IRQHandler(void)
 void EXTI2_3_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI2_3_IRQn 0 */
-#ifdef PIO_UNIT_TESTING
-    BUILTIN_LED_TOGGLE();
-#endif
+
   /* USER CODE END EXTI2_3_IRQn 0 */
   if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
     /* USER CODE BEGIN LL_EXTI_LINE_3 */
+#ifdef PIO_UNIT_TESTING
+    BUILTIN_LED_TOGGLE();
+#else
+    BaseType_t xHigherPriorityTaskWoken;
+    if (!queueSystemEvents)
+        return;
 
+    xQueueSendFromISR(queueSystemEvents, &((struct SystemEvent) {
+        .type = SysEvent_WAKEUP
+    }), &xHigherPriorityTaskWoken);
+#endif
     /* USER CODE END LL_EXTI_LINE_3 */
   }
   /* USER CODE BEGIN EXTI2_3_IRQn 1 */
@@ -196,7 +228,16 @@ void ADC1_IRQHandler(void)
   /* USER CODE END ADC1_IRQn 0 */
   HAL_ADC_IRQHandler(&hadc);
   /* USER CODE BEGIN ADC1_IRQn 1 */
+#ifdef PIO_UNIT_TESTING
 
+#else
+  BaseType_t xHigherPriorityTaskWoken;
+  
+  xQueueSendFromISR(queueSystemEvents, &((struct SystemEvent) {
+      .type = SysEvent_VOLTAGE, 
+      .data.voltage = ADC_ReadSupplyVoltage()
+  }), &xHigherPriorityTaskWoken);
+#endif
   /* USER CODE END ADC1_IRQn 1 */
 }
 
@@ -224,7 +265,15 @@ void USB_IRQHandler(void)
   /* USER CODE END USB_IRQn 0 */
   HAL_PCD_IRQHandler(&hpcd_USB_FS);
   /* USER CODE BEGIN USB_IRQn 1 */
-
+#ifdef PIO_UNIT_TESTING
+  extern uint8_t UserRxBufferFS[];
+  testVariable = strlen((char *)UserRxBufferFS);
+#else
+  if (taskTerminalService) {
+      BaseType_t xHigherPriorityTaskWoken;
+      vTaskNotifyGiveFromISR(taskTerminalService, &xHigherPriorityTaskWoken);
+  }
+#endif
   /* USER CODE END USB_IRQn 1 */
 }
 

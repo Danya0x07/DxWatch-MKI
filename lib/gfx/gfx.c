@@ -191,7 +191,7 @@ static const uint8_t *GetCharacterBitmap(char c)
             c -= 0x80;
         else
             c -= 0xB0;
-        bitmap = (const uint8_t *)&russian_charset[c];
+        bitmap = (const uint8_t *)&russian_charset[(uint8_t)c];
     }
     return bitmap;
 }
@@ -309,6 +309,13 @@ void GFX_PrintStringInFrame(uint8_t x0, uint8_t x1, uint8_t p1, const char *s)
     }
 }
 
+void GFX_PrintDec(int n)
+{
+    char buff[6];
+    itoa(n, buff, 10);
+    GFX_PrintString(buff);
+}
+
 void GFX_DrawImage(uint8_t x0, uint8_t p0, const struct GfxImage *image)
 {
     const uint8_t *bitmap = image->bitmap;
@@ -351,4 +358,5 @@ void GFX_ClearRect(uint8_t x0, uint8_t p0, uint8_t x1, uint8_t p1)
             DISPLAY_WriteByte(0);
         }
     }
+    GFX_SetCursor(x0, p0);
 }

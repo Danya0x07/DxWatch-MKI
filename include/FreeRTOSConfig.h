@@ -43,13 +43,13 @@
 
 extern uint32_t SystemCoreClock;
 
-#define configUSE_PREEMPTION                    0
+#define configUSE_PREEMPTION                    1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 0
 #define configUSE_TICKLESS_IDLE                 0
 #define configCPU_CLOCK_HZ                      (SystemCoreClock)
 #define configTICK_RATE_HZ                      100
 #define configMAX_PRIORITIES                    4
-#define configMINIMAL_STACK_SIZE                80
+#define configMINIMAL_STACK_SIZE                32
 #define configMAX_TASK_NAME_LEN                 4
 #define configUSE_16_BIT_TICKS                  0
 #define configIDLE_SHOULD_YIELD                 1
@@ -70,7 +70,7 @@ extern uint32_t SystemCoreClock;
 /* Memory allocation related definitions. */
 #define configSUPPORT_STATIC_ALLOCATION             0
 #define configSUPPORT_DYNAMIC_ALLOCATION            1
-#define configTOTAL_HEAP_SIZE                       2000
+#define configTOTAL_HEAP_SIZE                       2400
 #define configAPPLICATION_ALLOCATED_HEAP            0
 #define configSTACK_ALLOCATION_FROM_SEPARATE_HEAP   0
 
@@ -99,7 +99,7 @@ extern uint32_t SystemCoreClock;
 
 /* Define to trap errors during development. */
 extern void vAssertCalled(char *file, uint32_t line);
-#define configASSERT(x)   if( (x) == 0 ) vAssertCalled(__FILE__, __LINE__ )
+#define configASSERT(x)   if( (x) == 0 ) vAssertCalled(__FILE__, __LINE__)
 
 /* Optional functions - most linkers will remove unused functions anyway. */
 #define INCLUDE_vTaskPrioritySet                0

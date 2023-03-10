@@ -9,7 +9,6 @@
 #include <usb_device.h>
 #include <gpio.h>
 #include <irtim.h>
-#include <dma.h>
 #include <buttons.h>
 
 extern void Global_Setup(void);
