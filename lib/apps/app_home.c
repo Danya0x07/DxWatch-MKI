@@ -1,5 +1,4 @@
 #include "apps.h"
-#include <os_api.h>
 #include <gfx.h>
 #include <rtc.h>
 #include <motor.h>
@@ -162,6 +161,7 @@ static void AttemptToUnlock(AppSignal_t signal)
             locked = false;
             index = 0;
             DrawLockSign();
+            FLASH_LED_OFF();
         }
     } else {
         index = 0;
@@ -229,7 +229,7 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
             AttemptToUnlock(signal);
         } else {
             retCode = AppRetCode_EXIT;
-            *((struct Application **)io) = quickActionMayBe ? &appHome : &appHome; // TODO: stroboscope, menu
+            *((struct Application **)io) = quickActionMayBe ? &appStrobe : &appHome;
         }
         break;
 

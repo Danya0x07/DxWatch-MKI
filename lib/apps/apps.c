@@ -28,4 +28,7 @@ const struct GfxImage IMG_ALARM = {
     .heightPg = 1
 };
 
-void AppDummyCallback(void) {}
+void AppDummyCallback(void) 
+{
+    OS_StopCustomTimer();
+}

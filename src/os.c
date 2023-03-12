@@ -124,6 +124,9 @@ void Task_ApplicationEventLoop(void *arg)
                 APP_LIST[i]->save();
             }
             PWRLATCH_OFF();
+            xTimerStop(timerShutdown, portMAX_DELAY);
+            xTimerStop(timerMeasureVoltage, portMAX_DELAY);
+            GFX_Clear();
             break;
         
         case SysEvent_WAKEUP:

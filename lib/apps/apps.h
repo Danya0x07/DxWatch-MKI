@@ -5,6 +5,7 @@
 #include <gfx.h>
 
 extern struct Application appHome;
+extern struct Application appStrobe;
 extern struct Application *const APP_LIST[];
 extern const int APP_NUM;
 
