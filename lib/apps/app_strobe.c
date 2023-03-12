@@ -41,7 +41,7 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
 }
 
 struct Application appStrobe = {
-    .name = "Home",
+    .name = "Strobe",
     .load = AppDummyCallback,
     .process = process,
     .save = AppDummyCallback

@@ -176,6 +176,7 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
     switch (signal)
     {
     case AppSignal_ENTRANCE:
+        quickActionMayBe = false;
         GFX_Clear();
         OS_StartCustomTimer(20000);
         DrawAlarmSign();
