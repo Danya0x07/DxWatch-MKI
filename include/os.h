@@ -3,9 +3,10 @@
 
 #include "main.h"
 #include "buttons.h"
+#include "os_api.h"
 
 struct SystemEvent {
-    enum __attribute__((packed)) {
+    enum __packed {
         SysEvent_BUTTON,
         SysEvent_VOLTAGE,
         SysEvent_CUSTOM,

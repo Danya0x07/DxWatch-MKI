@@ -3,9 +3,9 @@
 
 #include "libcommon.h"
 
-typedef enum __attribute__((packed)) {BTN0, BTN1, BTN2, BTN3} Button_t;
+typedef enum __packed {BTN0, BTN1, BTN2, BTN3} Button_t;
 
-typedef enum __attribute__((packed)) {
+typedef enum __packed {
     ButtonEvent_NOTHING,
     ButtonEvent_PRESS,
     ButtonEvent_RELEASE

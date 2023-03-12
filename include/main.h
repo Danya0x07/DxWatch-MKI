@@ -90,6 +90,8 @@ void Error_Handler(void);
 #define MOTOR_GPIO_Port GPIOA
 #define IR_LED_Pin LL_GPIO_PIN_13
 #define IR_LED_GPIO_Port GPIOA
+#define PWR_LATCH_Pin LL_GPIO_PIN_14
+#define PWR_LATCH_GPIO_Port GPIOA
 #define BTN_1_Pin LL_GPIO_PIN_15
 #define BTN_1_GPIO_Port GPIOA
 #define BTN_0_Pin LL_GPIO_PIN_3
@@ -97,8 +99,6 @@ void Error_Handler(void);
 #define BTN_0_EXTI_IRQn EXTI2_3_IRQn
 #define IR_EYE_Pin LL_GPIO_PIN_4
 #define IR_EYE_GPIO_Port GPIOB
-#define PWR_LATCH_Pin LL_GPIO_PIN_5
-#define PWR_LATCH_GPIO_Port GPIOB
 #define FLASH_LED_Pin LL_GPIO_PIN_6
 #define FLASH_LED_GPIO_Port GPIOB
 #define BTN_2_Pin LL_GPIO_PIN_7

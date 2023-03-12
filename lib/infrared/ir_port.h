@@ -33,6 +33,6 @@
 #define MS_GET()    0
 #define MS_WAIT(ms)
 
-#endif // PIO_UNIT_TESTING
+#endif // DESKTOP_TEST
 
 #endif // _IR_PORT_H

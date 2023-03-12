@@ -70,7 +70,7 @@ extern uint32_t SystemCoreClock;
 /* Memory allocation related definitions. */
 #define configSUPPORT_STATIC_ALLOCATION             0
 #define configSUPPORT_DYNAMIC_ALLOCATION            1
-#define configTOTAL_HEAP_SIZE                       2400
+#define configTOTAL_HEAP_SIZE                       2200
 #define configAPPLICATION_ALLOCATED_HEAP            0
 #define configSTACK_ALLOCATION_FROM_SEPARATE_HEAP   0
 
@@ -105,7 +105,7 @@ extern void vAssertCalled(char *file, uint32_t line);
 #define INCLUDE_vTaskPrioritySet                0
 #define INCLUDE_uxTaskPriorityGet               0
 #define INCLUDE_vTaskDelete                     0
-#define INCLUDE_vTaskSuspend                    0
+#define INCLUDE_vTaskSuspend                    1
 #define INCLUDE_xResumeFromISR                  0
 #define INCLUDE_vTaskDelayUntil                 0
 #define INCLUDE_vTaskDelay                      1
