@@ -70,6 +70,17 @@ case AppSignal_CUSTOM:
 }
 */
 
+static bool locked = true;
+static AppSignal_t unlockSequence[] = {
+    AppSignal_BTN1PRESS,
+    AppSignal_BTN2PRESS,
+    AppSignal_BTN1RELEASE,
+    AppSignal_BTN0PRESS,
+    AppSignal_BTN2RELEASE,
+    AppSignal_BTN0RELEASE
+};
+static uint8_t unlockSequenceLength = sizeof(unlockSequence) / sizeof(unlockSequence[0]);
+
 static void DrawDateTime(void)
 {
     LL_RTC_DateTypeDef date;
@@ -79,7 +90,7 @@ static void DrawDateTime(void)
     RTC_GetDateTime(&date, &time);
 
     GFX_SetupBrush(GfxFontSize_21X15, GfxImageScale_X1, false);
-    GFX_SetCursor(1, 1);
+    GFX_SetCursor(24, 3);
 
     buff[0] = '0' + time.Hours / 10;
     buff[1] = '0' + time.Hours % 10;
@@ -89,9 +100,12 @@ static void DrawDateTime(void)
     buff[5] = '\0';
     GFX_PrintString(buff);
 
+    GFX_SetupBrush(GfxFontSize_14X10, GfxImageScale_X1, false);
+    GFX_SetCursor(54, 1);
+    GFX_PrintString(WEEKDAYS[date.WeekDay - 1]);
+
     GFX_SetupBrush(GfxFontSize_7X5, GfxImageScale_X1, false);
-    GFX_SetCursor(6, 6);
-    
+    GFX_SetCursor(46, 6);
     buff[0] = '0' + date.Day / 10;
     buff[1] = '0' + date.Day % 10;
     buff[2] = ':';
@@ -107,43 +121,121 @@ static void DrawDateTime(void)
 static void DrawVoltage(uint16_t voltage)
 {
     GFX_SetupBrush(GfxFontSize_7X5, GfxImageScale_X1, false);
-    GFX_SetCursor(17, 0);
-    GFX_PrintChar(voltage <= 34 ? '!' : voltage >= 49 ? '^' : ' ');
+    GFX_SetCursor(96, 0);
+    if (voltage >= 44)
+        GFX_DrawImage(96, 0, &IMG_USBSIGN);
+    else if (voltage < 34)
+        GFX_PrintChar('!');
+    else
+        GFX_PrintChar(' ');
     GFX_PrintChar('0' + voltage / 10);
     GFX_PrintChar('.');
     GFX_PrintChar('0' + voltage % 10);
+    GFX_PrintChar('v');
 }
 
 static inline void DrawAlarmSign(void)
 {
+    GFX_SetupBrush(GfxFontSize_7X5, GfxImageScale_X1, false);
+    if (RTC_ALARM_Enabled())
+        GFX_DrawImage(0, 0, &IMG_ALARM);
+    else
+        GFX_ClearRect(0, 0, 7, 0);
+}
 
+static void DrawLockSign(void)
+{
+    GFX_SetupBrush(GfxFontSize_7X5, GfxImageScale_X1, false);
+    if (locked)
+        GFX_DrawImage(0, 7, &IMG_LOCK);
+    else
+        GFX_ClearRect(0, 7, IMG_LOCK.widthPx - 1, 7);
+}
+
+static void AttemptToUnlock(AppSignal_t signal)
+{
+    static uint8_t index = 0;
+
+    if (signal == unlockSequence[index]) {
+        index++;
+        if (index == unlockSequenceLength) {
+            locked = false;
+            index = 0;
+            DrawLockSign();
+        }
+    } else {
+        index = 0;
+    }
 }
 
 static AppRetCode_t process(AppSignal_t signal, void *io)
 {
     AppRetCode_t retCode = AppRetCode_OK;
+    static bool quickActionMayBe = false;
     
     switch (signal)
     {
     case AppSignal_ENTRANCE:
         GFX_Clear();
         OS_StartCustomTimer(20000);
+        DrawAlarmSign();
+        DrawLockSign();
     case AppSignal_CUSTOM:
         DrawDateTime();
+        break;
+    
+    case AppSignal_BTN0PRESS:
+    case AppSignal_BTN0RELEASE:
+    case AppSignal_BTN2RELEASE:
+    case AppSignal_BTN3RELEASE:
+        if (locked) {
+            AttemptToUnlock(signal);
+        }
+        break;
+
+    case AppSignal_BTN1PRESS:
+        if (locked) {
+            AttemptToUnlock(signal);
+        } else {
+            quickActionMayBe = true;
+        }
+        break;
+
+    case AppSignal_BTN1RELEASE:
+        if (locked) {
+            AttemptToUnlock(signal);
+        } else {
+            quickActionMayBe = false;
+        }
+        break;
+
+    case AppSignal_BTN2PRESS:
+        if (locked) {
+            AttemptToUnlock(signal);
+        } else {
+            if (quickActionMayBe && !MOTOR_IS_ON()) {
+                FLASH_LED_TOGGLE();
+            } else {
+                locked = true;
+                DrawLockSign();
+            }
+        }
         break;
 
     case AppSignal_BTN3PRESS:
         if (MOTOR_IS_ON()) {
             MOTOR_OFF();
+        } else if (locked) {
+            AttemptToUnlock(signal);
         } else {
             retCode = AppRetCode_EXIT;
-            *((struct Application **)io) = &appHome;
+            *((struct Application **)io) = quickActionMayBe ? &appHome : &appHome; // TODO: stroboscope, menu
         }
         break;
 
     case AppSignal_VOLTAGE:
     {
-        uint16_t voltage = (uint16_t)io;
+        uint16_t voltage = (uint16_t)((uintptr_t)io);
         DrawVoltage(voltage);
     }
         break;

@@ -212,8 +212,8 @@ void GFX_SetupBrush(enum GfxFontSize fontSize, enum GfxImageScale imageScale, bo
 
 void GFX_SetCursor(uint8_t x, uint8_t p)
 {
-    x *= brush.fontSize * CHAR_WIDTH_PX;
-    p *= brush.fontSize;
+    //x *= brush.fontSize * CHAR_WIDTH_PX;
+    //p *= brush.fontSize;
     SetRamAddr(x, p);
 }
 

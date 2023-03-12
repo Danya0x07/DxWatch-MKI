@@ -249,10 +249,10 @@ static void SystemLoad(void)
     GFX_SetupBrush(GfxFontSize_14X10, GfxImageScale_X1, false);
     GFX_SetCursor(0, 0);
     GFX_PrintString("DxWatch");
-    GFX_SetCursor(2, 1);
+    GFX_SetCursor(24, 2);
     GFX_PrintString("MK 1");
     
-    GFX_SetCursor(0, 3);
+    GFX_SetCursor(0, 6);
     for (int i = 0; i < 5; i++) {
         GFX_PrintChar('.');
         HAL_Delay(400);

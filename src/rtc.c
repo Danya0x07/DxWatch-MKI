@@ -115,6 +115,7 @@ void RTC_GetDateTime(LL_RTC_DateTypeDef *date,LL_RTC_TimeTypeDef *time)
     date->Year  = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetYear(RTC));
     date->Month = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetMonth(RTC));
     date->Day   = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetDay(RTC));
+    date->WeekDay = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_DATE_GetWeekDay(RTC));
 }
 
 void RTC_ALARM_Disable(void)
