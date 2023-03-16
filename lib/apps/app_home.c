@@ -1,6 +1,4 @@
 #include "apps.h"
-#include <gfx.h>
-#include <rtc.h>
 #include <motor.h>
 #include <flash_led.h>
 
@@ -80,44 +78,64 @@ static AppSignal_t unlockSequence[] = {
 };
 static uint8_t unlockSequenceLength = sizeof(unlockSequence) / sizeof(unlockSequence[0]);
 
-static void DrawDateTime(void)
+void ReadDateTime(int8_t buff[])
 {
     LL_RTC_DateTypeDef date;
     LL_RTC_TimeTypeDef time;
-    char buff[9];
 
     RTC_GetDateTime(&date, &time);
 
+    ParseTime(&time, &buff[Data_HRH]);
+    ParseDate(&date, &buff[Data_DH]);
+}
+
+static void DrawLayout(void)
+{
+    GFX_Clear();
     GFX_SetupBrush(GfxFontSize_21X15, GfxImageScale_X1, false);
     GFX_SetCursor(24, 3);
-
-    buff[0] = '0' + time.Hours / 10;
-    buff[1] = '0' + time.Hours % 10;
-    buff[2] = ':';
-    buff[3] = '0' + time.Minutes / 10;
-    buff[4] = '0' + time.Minutes % 10;
-    buff[5] = '\0';
-    GFX_PrintString(buff);
-
-    GFX_SetupBrush(GfxFontSize_14X10, GfxImageScale_X1, false);
-    GFX_SetCursor(54, 1);
-    GFX_PrintString(WEEKDAYS[date.WeekDay - 1]);
+    GFX_PrintString(LAYOUT_TIME);
 
     GFX_SetupBrush(GfxFontSize_7X5, GfxImageScale_X1, false);
     GFX_SetCursor(46, 6);
-    buff[0] = '0' + date.Day / 10;
-    buff[1] = '0' + date.Day % 10;
-    buff[2] = ':';
-    buff[3] = '0' + date.Month / 10;
-    buff[4] = '0' + date.Month % 10;
-    buff[5] = ':';
-    buff[6] = '0' + date.Year / 10;
-    buff[7] = '0' + date.Year % 10;
-    buff[8] = '\0';
-    GFX_PrintString(buff);
+    GFX_PrintString(LAYOUT_DATE);
+
+    GFX_SetCursor(102, 0);
+    GFX_PrintString(LAYOUT_VOLTAGE);
+
+    if (RTC_ALARM_Enabled())
+        GFX_DrawImage(0, 0, &IMG_ALARM);
+    else
+        GFX_ClearRect(0, 0, 7, 0);
 }
 
-static void DrawVoltage(uint16_t voltage)
+static void DrawData(int8_t buff[])
+{
+    GFX_SetupBrush(GfxFontSize_21X15, GfxImageScale_X1, false);
+    GFX_SetCursor(24, 3);
+    PrintDigit(buff[Data_HRH]);
+    PrintDigit(buff[Data_HRL]);
+    GFX_SetCursor(78, 3);
+    PrintDigit(buff[Data_MINH]);
+    PrintDigit(buff[Data_MINL]);
+
+    GFX_SetupBrush(GfxFontSize_14X10, GfxImageScale_X1, false);
+    GFX_SetCursor(54, 1);
+    GFX_PrintString(WEEKDAYS[buff[Data_W] - 1]);
+
+    GFX_SetupBrush(GfxFontSize_7X5, GfxImageScale_X1, false);
+    GFX_SetCursor(46, 6);
+    PrintDigit(buff[Data_DH]);
+    PrintDigit(buff[Data_DL]);
+    GFX_SetCursor(64, 6);
+    PrintDigit(buff[Data_MH]);
+    PrintDigit(buff[Data_ML]);
+    GFX_SetCursor(82, 6);
+    PrintDigit(buff[Data_YH]);
+    PrintDigit(buff[Data_YL]);
+}
+
+static void DrawVoltage(uint8_t voltage)
 {
     GFX_SetupBrush(GfxFontSize_7X5, GfxImageScale_X1, false);
     GFX_SetCursor(96, 0);
@@ -127,19 +145,10 @@ static void DrawVoltage(uint16_t voltage)
         GFX_PrintChar('!');
     else
         GFX_PrintChar(' ');
-    GFX_PrintChar('0' + voltage / 10);
-    GFX_PrintChar('.');
-    GFX_PrintChar('0' + voltage % 10);
-    GFX_PrintChar('v');
-}
-
-static inline void DrawAlarmSign(void)
-{
-    GFX_SetupBrush(GfxFontSize_7X5, GfxImageScale_X1, false);
-    if (RTC_ALARM_Enabled())
-        GFX_DrawImage(0, 0, &IMG_ALARM);
-    else
-        GFX_ClearRect(0, 0, 7, 0);
+    GFX_SetCursor(102, 0);
+    PrintDigit(voltage / 10);
+    GFX_SetCursor(114, 0);
+    PrintDigit(voltage % 10);
 }
 
 static void DrawLockSign(void)
@@ -177,12 +186,12 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
     {
     case AppSignal_ENTRANCE:
         quickActionMayBe = false;
-        GFX_Clear();
-        OS_StartCustomTimer(20000);
-        DrawAlarmSign();
+        DrawLayout();
         DrawLockSign();
+        OS_StartCustomTimer(20000);
     case AppSignal_CUSTOM:
-        DrawDateTime();
+        ReadDateTime(screenDataBuffer);
+        DrawData(screenDataBuffer);
         break;
     
     case AppSignal_BTN0PRESS:
@@ -230,15 +239,12 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
             AttemptToUnlock(signal);
         } else {
             retCode = AppRetCode_EXIT;
-            *((struct Application **)io) = quickActionMayBe ? &appStrobe : &appHome;
+            *((struct Application **)io) = quickActionMayBe ? &appAlarm : &appDateTime;
         }
         break;
 
     case AppSignal_VOLTAGE:
-    {
-        uint16_t voltage = (uint16_t)((uintptr_t)io);
-        DrawVoltage(voltage);
-    }
+        DrawVoltage((uint8_t)((uintptr_t)io));
         break;
 
     case AppSignal_LOWVOLTAGE:
@@ -264,7 +270,8 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
         break;
 
     case AppSignal_WAKEUP:
-        DrawDateTime();
+        ReadDateTime(screenDataBuffer);
+        DrawData(screenDataBuffer);
         OS_StartCustomTimer(20000);
         break;
     

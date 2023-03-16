@@ -145,7 +145,7 @@ void RTC_ALARM_GetTime(LL_RTC_TimeTypeDef *time)
     time->TimeFormat = LL_RTC_TIME_FORMAT_AM_OR_24;
     time->Hours = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_ALMA_GetHour(RTC));
     time->Minutes = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_ALMA_GetMinute(RTC));
-    time->Seconds = __LL_RTC_CONVERT_BCD2BIN(LL_RTC_ALMA_GetSecond(RTC));
+    time->Seconds = 0;
 }
 
 void RTC_ALARM_SetTime(LL_RTC_TimeTypeDef *time)
@@ -155,7 +155,7 @@ void RTC_ALARM_SetTime(LL_RTC_TimeTypeDef *time)
     LL_RTC_ALMA_ConfigTime(RTC, LL_RTC_TIME_FORMAT_AM_OR_24,
                            __LL_RTC_CONVERT_BIN2BCD(time->Hours),
                            __LL_RTC_CONVERT_BIN2BCD(time->Minutes),
-                           __LL_RTC_CONVERT_BIN2BCD(time->Seconds));
+                           __LL_RTC_CONVERT_BIN2BCD(0));
     LL_RTC_EnableWriteProtection(RTC);
 }
 /* USER CODE END 1 */

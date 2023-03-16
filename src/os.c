@@ -117,6 +117,7 @@ void Task_ApplicationEventLoop(void *arg)
             }
             app = APP_LIST[0];
             retCode = app->process(AppSignal_ENTRANCE, &output);
+            xTimerStart(timerShutdown, portMAX_DELAY);
             break;
         
         case SysEvent_SHUTDOWN:
@@ -218,7 +219,7 @@ void Callback_Shutdown(TimerHandle_t timer)
     if (Button_IsPressed(BTN0)) {
         systemEvent.type = SysEvent_SHUTDOWN;
         
-        if (Button_IsPressed(BTN1)) {// Extra power cutoff
+        if (Button_IsPressed(BTN1)) {  // Extra power cutoff
             PWRLATCH_OFF();
         }
     }

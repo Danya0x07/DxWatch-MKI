@@ -55,7 +55,7 @@ extern uint32_t SystemCoreClock;
 #define configIDLE_SHOULD_YIELD                 1
 #define configUSE_TASK_NOTIFICATIONS            1
 #define configTASK_NOTIFICATION_ARRAY_ENTRIES   1
-#define configUSE_MUTEXES                       1
+#define configUSE_MUTEXES                       0
 #define configUSE_RECURSIVE_MUTEXES             0
 #define configUSE_COUNTING_SEMAPHORES           0
 #define configQUEUE_REGISTRY_SIZE               4
@@ -99,7 +99,7 @@ extern uint32_t SystemCoreClock;
 
 /* Define to trap errors during development. */
 extern void vAssertCalled(char *file, uint32_t line);
-#define configASSERT(x)   if( (x) == 0 ) vAssertCalled(__FILE__, __LINE__)
+//#define configASSERT(x)   if( (x) == 0 ) vAssertCalled(__FILE__, __LINE__)
 
 /* Optional functions - most linkers will remove unused functions anyway. */
 #define INCLUDE_vTaskPrioritySet                0
