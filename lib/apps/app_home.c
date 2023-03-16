@@ -239,7 +239,7 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
             AttemptToUnlock(signal);
         } else {
             retCode = AppRetCode_EXIT;
-            *((struct Application **)io) = quickActionMayBe ? &appAlarm : &appDateTime;
+            *((struct Application **)io) = quickActionMayBe ? &appStrobe : &appMenu;
         }
         break;
 
@@ -256,6 +256,8 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
         break;
 
     case AppSignal_RTCALARM:
+        ReadDateTime(screenDataBuffer);
+        DrawData(screenDataBuffer);
         if (FLASH_LED_IS_ON())
             FLASH_LED_OFF();
         MOTOR_ON();

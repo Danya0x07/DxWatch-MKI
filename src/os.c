@@ -156,6 +156,10 @@ void Task_ApplicationEventLoop(void *arg)
             break;
 
         case SysEvent_CUSTOM:
+            Button0_DisableInterrupt();
+            DISPLAY_ON();
+            vTaskResume(taskButtonsEvents);
+            xTimerReset(timerShutdown, portMAX_DELAY);
             retCode = app->process(AppSignal_CUSTOM, &output);
             break;
 

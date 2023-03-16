@@ -6,6 +6,7 @@
 #include <rtc.h>
 
 extern struct Application appHome;
+extern struct Application appMenu;
 extern struct Application appStrobe;
 extern struct Application appAlarm;
 extern struct Application appDateTime;

@@ -2,6 +2,8 @@
 
 struct Application *const APP_LIST[] = {
     &appHome,
+    &appMenu,
+    &appStrobe,
     &appDateTime,
     &appAlarm
 };
