@@ -2,6 +2,9 @@
 #include <motor.h>
 #include <flash_led.h>
 
+#define NUM_PAGES   2
+static uint8_t prevPage = 0xFF;
+
 static void DrawLayout(void)
 {
     GFX_Clear();
@@ -10,29 +13,33 @@ static void DrawLayout(void)
     GFX_PrintString("Apps");
 }
 
+static uint8_t calculatePageBounds(uint8_t index, uint8_t *startIdx, uint8_t *endIdx)
+{
+    for (uint8_t i = 0; i < NUM_PAGES; i++) {
+        *startIdx = 3 + 7 * i;
+        *endIdx = 9 + 7 * i;
+        if (*startIdx <= index && index <= *endIdx) {
+            if (*endIdx > APP_NUM - 1)
+                *endIdx = APP_NUM - 1;
+            return i;
+        }
+    }
+    return 0;
+}
+
 static void DrawOptions(uint8_t index)
 {
-    static uint8_t prevIndex;
+    uint8_t page, startIdx, endIdx;
 
-    if (index != prevIndex) {
-        uint8_t startIdx = 3, endIdx = 9;
+    page = calculatePageBounds(index, &startIdx, &endIdx);
 
-        if (3 <= index && index <= 9)
-            startIdx = 3, endIdx = 9;
-        else if (10 <= index && index <= 16)
-            startIdx = 10, endIdx = 16;
-        else if (17 <= index && index <= 23)
-            startIdx = 17, endIdx = 23;
-        
-        if (endIdx > APP_NUM - 1)
-            endIdx = APP_NUM - 1;
-        
+    if (page != prevPage) {
         GFX_ClearRect(6, 1, 127, 7);
         for (uint8_t i = startIdx, j = 1; i <= endIdx; i++, j++) {
             GFX_SetCursor(6, j);
             GFX_PrintString(APP_LIST[i]->name);
         }
-        prevIndex = index;
+        prevPage = page;
     }
 }
 
@@ -54,6 +61,7 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
     {
     case AppSignal_ENTRANCE:
         screenDataIndex = 3;
+        prevPage = 0xFF;
         DrawLayout();
         DrawOptions(screenDataIndex);
         DrawMarker(screenDataIndex);
