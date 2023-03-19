@@ -2,7 +2,7 @@
 #include <gfx.h>
 #include <flash_led.h>
 #include <motor.h>
-//#include <stdlib.h>
+
 
 static AppRetCode_t process(AppSignal_t signal, void *io)
 {
@@ -14,7 +14,7 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
         GFX_Clear();
         if (MOTOR_IS_ON())
             MOTOR_OFF();
-        OS_StartCustomTimer(200);
+        OS_StartCustomTimer(50);
         break;
 
     case AppSignal_BTN3PRESS:

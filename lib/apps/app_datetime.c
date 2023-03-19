@@ -9,7 +9,7 @@ static void WriteDateTime(const int8_t buff[])
         .Day = buff[Data_DH] * 10 + buff[Data_DL],
         .Month = buff[Data_MH] * 10 + buff[Data_ML],
         .Year = buff[Data_YH] * 10 + buff[Data_YL],
-        .WeekDay = buff[Data_W] * 10 + buff[Data_W]
+        .WeekDay = buff[Data_W]
     };
     
     LL_RTC_TimeTypeDef time = {

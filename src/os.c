@@ -1,7 +1,6 @@
 #include "os.h"
 #include "buttons.h"
 #include "adc.h"
-#include "usbd_cdc_if.h"
 #include "pwrlatch.h"
 #include "display.h"
 #include "builtin_led.h"
@@ -16,7 +15,6 @@
 
 TaskHandle_t taskButtonsEvents;
 TaskHandle_t taskApplicationEventLoop;
-TaskHandle_t taskTerminalService;
 
 TimerHandle_t timerMeasureVoltage;
 TimerHandle_t timerCustomRoutine;
@@ -192,18 +190,6 @@ void Task_ApplicationEventLoop(void *arg)
     }
 }
 
-void Task_TerminalService(void *arg) // TODO
-{
-    extern uint8_t UserRxBufferFS[APP_RX_DATA_SIZE];
-    static char buffer[APP_RX_DATA_SIZE];
-
-    for (;;) {
-        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        memcpy(buffer, UserRxBufferFS, sizeof(buffer));
-        CDC_Transmit_FS((uint8_t *)buffer, strlen(buffer));
-    }
-}
-
 void Callback_MeasureVoltage(TimerHandle_t timer)
 {
     ADC_PerformMeasurements();
@@ -280,9 +266,7 @@ void OS_Init(void)
     xTaskCreate(Task_CheckButtonsEvents,
             "cbe", 64, NULL, 1, &taskButtonsEvents);
     xTaskCreate(Task_ApplicationEventLoop,
-            "app", 128, NULL, 0, &taskApplicationEventLoop);
-    xTaskCreate(Task_TerminalService,
-            "ter", 64, NULL, 2, &taskTerminalService);
+            "app", 256, NULL, 0, &taskApplicationEventLoop);
     
     timerMeasureVoltage = xTimerCreate("vol", pdMS_TO_TICKS(10000), 
             true, NULL, Callback_MeasureVoltage);

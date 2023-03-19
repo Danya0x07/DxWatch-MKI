@@ -24,7 +24,6 @@
 #include "spi.h"
 #include "tim.h"
 #include "usart.h"
-#include "usb_device.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -100,7 +99,6 @@ int main(void)
   MX_USART1_UART_Init();
   MX_IRTIM_Init();
   MX_TIM14_Init();
-  MX_USB_DEVICE_Init();
   /* USER CODE BEGIN 2 */
 
   OS_Init();
@@ -143,13 +141,6 @@ void SystemClock_Config(void)
 
   }
   LL_RCC_HSI14_SetCalibTrimming(16);
-  LL_RCC_HSI48_Enable();
-
-   /* Wait till HSI48 is ready */
-  while(LL_RCC_HSI48_IsReady() != 1)
-  {
-
-  }
   LL_PWR_EnableBkUpAccess();
   if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_HSE_DIV32)
   {
@@ -176,7 +167,6 @@ void SystemClock_Config(void)
   }
   LL_RCC_HSI14_EnableADCControl();
   LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK1);
-  LL_RCC_SetUSBClockSource(LL_RCC_USB_CLKSOURCE_HSI48);
 }
 
 /* USER CODE BEGIN 4 */

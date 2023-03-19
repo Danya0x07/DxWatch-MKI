@@ -66,7 +66,6 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern PCD_HandleTypeDef hpcd_USB_FS;
 extern ADC_HandleTypeDef hadc;
 extern TIM_HandleTypeDef htim3;
 
@@ -253,28 +252,6 @@ void TIM3_IRQHandler(void)
   /* USER CODE BEGIN TIM3_IRQn 1 */
 
   /* USER CODE END TIM3_IRQn 1 */
-}
-
-/**
-  * @brief This function handles USB global Interrupt / USB wake-up interrupt through EXTI line 18.
-  */
-void USB_IRQHandler(void)
-{
-  /* USER CODE BEGIN USB_IRQn 0 */
-
-  /* USER CODE END USB_IRQn 0 */
-  HAL_PCD_IRQHandler(&hpcd_USB_FS);
-  /* USER CODE BEGIN USB_IRQn 1 */
-#ifdef PIO_UNIT_TESTING
-  extern uint8_t UserRxBufferFS[];
-  testVariable = strlen((char *)UserRxBufferFS);
-#else
-  if (taskTerminalService) {
-      BaseType_t xHigherPriorityTaskWoken;
-      vTaskNotifyGiveFromISR(taskTerminalService, &xHigherPriorityTaskWoken);
-  }
-#endif
-  /* USER CODE END USB_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

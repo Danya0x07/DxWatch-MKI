@@ -55,7 +55,6 @@ void RTC_IRQHandler(void);
 void EXTI2_3_IRQHandler(void);
 void ADC1_IRQHandler(void);
 void TIM3_IRQHandler(void);
-void USB_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
