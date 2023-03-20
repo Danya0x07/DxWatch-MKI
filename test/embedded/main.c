@@ -6,7 +6,6 @@
 #include <spi.h>
 #include <tim.h>
 #include <usart.h>
-#include <usb_device.h>
 #include <gpio.h>
 #include <irtim.h>
 #include <buttons.h>
@@ -70,7 +69,6 @@ int main(void)
     MX_USART1_UART_Init();
     MX_IRTIM_Init();
     MX_TIM14_Init();
-    MX_USB_DEVICE_Init();
     Button0_DisableInterrupt();
 
     UNITY_BEGIN();

@@ -316,6 +316,13 @@ void GFX_PrintDec(int n)
     GFX_PrintString(buff);
 }
 
+void GFX_PrintHex(int n)
+{
+    char buff[6];
+    itoa(n, buff, 16);
+    GFX_PrintString(buff);
+}
+
 void GFX_DrawImage(uint8_t x0, uint8_t p0, const struct GfxImage *image)
 {
     const uint8_t *bitmap = image->bitmap;

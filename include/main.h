@@ -88,8 +88,6 @@ void Error_Handler(void);
 #define BATTERY_GPIO_Port GPIOB
 #define MOTOR_Pin LL_GPIO_PIN_8
 #define MOTOR_GPIO_Port GPIOA
-#define IR_LED_Pin LL_GPIO_PIN_13
-#define IR_LED_GPIO_Port GPIOA
 #define BTN_1_Pin LL_GPIO_PIN_15
 #define BTN_1_GPIO_Port GPIOA
 #define BTN_0_Pin LL_GPIO_PIN_3

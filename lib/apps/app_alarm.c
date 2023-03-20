@@ -135,9 +135,36 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
     return retCode;
 }
 
+static void Load(void)
+{
+    LL_RTC_TimeTypeDef time;
+    LoadAlarmTime(0, &time);
+    bool enabled = time.Hours & (1 << 7);
+
+    time.Hours &= ~(1 << 7);
+    if (time.Minutes > 59 || time.Hours > 23) {
+        return;
+    }
+    RTC_ALARM_SetTime(&time);
+    if (enabled)
+        RTC_ALARM_Enable();
+    else
+        RTC_ALARM_Disable();
+}
+
+static void Save(void)
+{
+    LL_RTC_TimeTypeDef time;
+
+    RTC_ALARM_GetTime(&time);
+    if (RTC_ALARM_Enabled())
+        time.Hours |= (1 << 7);
+    SaveAlarmTime(0, &time);
+}
+
 struct Application appAlarm = {
     .name = "Alarm set",
-    .load = AppDummyCallback,
+    .load = Load,
     .process = process,
-    .save = AppDummyCallback
+    .save = Save
 };

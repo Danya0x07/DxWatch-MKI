@@ -33,6 +33,7 @@ void GFX_PrintChar(char c);
 void GFX_PrintString(const char *s);
 void GFX_PrintStringInFrame(uint8_t x0, uint8_t x1, uint8_t p1, const char *s);
 void GFX_PrintDec(int n);
+void GFX_PrintHex(int n);
 
 void GFX_DrawImage(uint8_t x0, uint8_t p0, const struct GfxImage *image);
 

@@ -1,5 +1,6 @@
 #include "m95256.h"
 #include "m95256_port.h"
+#include <builtin_led.h>
 
 #define PAGE_ADDR_LEN   9
 #define NUM_OF_PAGES    (1 << PAGE_ADDR_LEN)
@@ -115,7 +116,7 @@ M95_Error_t M95256_WriteArray(uint16_t addr, const uint8_t *arr, uint16_t len)
     uint16_t byteAddr = addr & BYTE_ADDR_MASK;
     uint16_t endPageAddr = (addr + len) >> BYTE_ADDR_LEN;
     uint16_t numOfPages = endPageAddr - startPageAddr + 1;
-
+    //BUILTIN_LED_ON();
     uint8_t statusReg = ReadStatusRegister();
     M95_WriteProtection_t protection = statusReg >> WP_SHIFT & WP_MASK;
 
@@ -130,7 +131,7 @@ M95_Error_t M95256_WriteArray(uint16_t addr, const uint8_t *arr, uint16_t len)
     uint16_t currentPageAddr = startPageAddr;
     uint16_t bytesToWrite;
     uint16_t pos = 0;
-
+    
     while (numOfPages--) {
         bytesToWrite = BytesTillEndOfPage(byteAddr, len);
 
@@ -155,7 +156,7 @@ M95_Error_t M95256_WriteArray(uint16_t addr, const uint8_t *arr, uint16_t len)
         len -= bytesToWrite;
         pos += bytesToWrite;
     }
-    
+    //BUILTIN_LED_OFF();
     return M95_Error_NONE;
 }
 

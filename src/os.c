@@ -4,6 +4,7 @@
 #include "pwrlatch.h"
 #include "display.h"
 #include "builtin_led.h"
+#include "eeprom.h"
 
 #include <FreeRTOS.h>
 #include <task.h>
@@ -122,10 +123,14 @@ void Task_ApplicationEventLoop(void *arg)
             for (int i = 0; i < APP_NUM; i++) {
                 APP_LIST[i]->save();
             }
-            PWRLATCH_OFF();
             xTimerStop(timerShutdown, portMAX_DELAY);
             xTimerStop(timerMeasureVoltage, portMAX_DELAY);
+            xTimerStop(timerCustomRoutine, portMAX_DELAY);
+            vTaskSuspend(taskButtonsEvents);
+            Button0_DisableInterrupt();
+            RTC_ALARM_Disable();
             GFX_Clear();
+            PWRLATCH_OFF();
             break;
         
         case SysEvent_WAKEUP:
@@ -181,6 +186,7 @@ void Task_ApplicationEventLoop(void *arg)
         }
 
         while (retCode == AppRetCode_EXIT) {
+            OS_StopCustomTimer();
             app = (struct Application *)output;
             retCode = app->process(AppSignal_ENTRANCE, &output);
         }
@@ -220,6 +226,8 @@ void Callback_Shutdown(TimerHandle_t timer)
 static bool PowerOnSelfTest(void)
 {
     DISPLAY_Init();
+    EEPROM_Init();
+    EEPROM_SetProtection(true);
     Button0_DisableInterrupt();
 
     if (!LL_GPIO_IsInputPinSet(IR_EYE_GPIO_Port, IR_EYE_Pin)) {
@@ -232,7 +240,6 @@ static bool PowerOnSelfTest(void)
 
 static void SystemLoad(void)
 {
-    // TODO load data from EEPROM
     GFX_Clear();
 
     const char lastBuildDateTime[] = __DATE__ " " __TIME__;

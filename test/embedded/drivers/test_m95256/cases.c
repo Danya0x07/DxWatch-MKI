@@ -113,8 +113,8 @@ void Test_WriteArrayToOnePage(void)
 void Test_WriteMultiplePages(void)
 {
     blink(4, 3000);
-    uint8_t content[128];
-    uint8_t actual[130];
+    uint8_t content[250];
+    uint8_t actual[252];
     memset(content, 0xEE, sizeof(content));
 
     blink(M95256_WriteArray(TEST_EEPROM_START_ADDR + 12, content, sizeof(content)), 200);
@@ -124,7 +124,7 @@ void Test_WriteMultiplePages(void)
     if (actual[0] == content[0])
         blink(1, 500);
     HAL_Delay(1000);
-    if (actual[129] == content[127])
+    if (actual[251] == content[249])
         blink(2, 500);
     HAL_Delay(1000);
     for (int i = 0; i < sizeof(content); i++) {

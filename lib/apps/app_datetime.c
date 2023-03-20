@@ -230,6 +230,31 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
     return retCode;
 }
 
+/*
+static void Load(void)
+{
+    LL_RTC_DateTypeDef date;
+    LL_RTC_TimeTypeDef time;
+
+    LoadDateTime(&date, &time);
+    if (
+        date.WeekDay > 7 || date.WeekDay < 1 || date.Day > 31 || date.Year > 99
+        || date.Month < 1 || date.Month > 12 || time.Minutes > 59 || time.Hours > 23
+    ) {
+        return;
+    }
+    RTC_SetDateTime(&date, &time);
+}
+
+static void Save(void)
+{
+    LL_RTC_DateTypeDef date;
+    LL_RTC_TimeTypeDef time;
+
+    RTC_GetDateTime(&date, &time);
+    SaveDateTime(&date, &time);
+}*/
+
 struct Application appDateTime = {
     .name = "Date&Time",
     .load = AppDummyCallback,
