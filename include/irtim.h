@@ -40,8 +40,10 @@ void MX_IRTIM_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void IRTIM_SetCarrierFrequency(uint8_t kHz);
+uint8_t IRTIM_GetCarrierFrequency(void);
 void IRTIM_EnableCarrier(void);
 void IRTIM_DisableCarrier(void);
+bool IRTIM_CarrierEnabled(void);
 void IRTIM_SetLedState(bool state);
 /* USER CODE END Prototypes */
 

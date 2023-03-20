@@ -45,12 +45,20 @@ void MX_IRTIM_Init(void)
 
 /* USER CODE BEGIN 1 */
 
+static uint8_t carrierFrequencyKHz;
+
 void IRTIM_SetCarrierFrequency(uint8_t kHz)
 {
     uint16_t timerInputkHz = HAL_RCC_GetSysClockFreq() / (LL_TIM_GetPrescaler(TIM_CARR) + 1) / 1000;
     uint16_t arr = timerInputkHz / kHz - 1;
     LL_TIM_SetAutoReload(TIM_CARR, arr);
     LL_TIM_OC_SetCompareCH1(TIM_CARR, arr * 3 / 5);
+    carrierFrequencyKHz = kHz;
+}
+
+uint8_t IRTIM_GetCarrierFrequency(void)
+{
+    return carrierFrequencyKHz;
 }
 
 void IRTIM_EnableCarrier(void)
@@ -68,6 +76,11 @@ void IRTIM_DisableCarrier(void)
     LL_TIM_DisableCounter(TIM_CARR);
     LL_TIM_SetCounter(TIM_CARR, 0);
     LL_TIM_SetCounter(TIM_ENV, 0);
+}
+
+bool IRTIM_CarrierEnabled(void)
+{
+    return LL_GPIO_GetPinMode(GPIOA, LL_GPIO_PIN_13) == LL_GPIO_MODE_ALTERNATE;
 }
 
 void IRTIM_SetLedState(bool state)

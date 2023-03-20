@@ -1,6 +1,7 @@
 #include "apps.h"
 #include <motor.h>
 #include <flash_led.h>
+#include <irtim.h>
 
 /*
 switch()
@@ -107,6 +108,9 @@ static void DrawLayout(void)
         GFX_DrawImage(0, 0, &IMG_ALARM);
     else
         GFX_ClearRect(0, 0, 7, 0);
+    
+    if (IRTIM_CarrierEnabled())
+        GFX_DrawImage(12, 0, &IMG_DDOS);
 }
 
 static void DrawData(int8_t buff[])
@@ -235,7 +239,10 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
     case AppSignal_BTN3PRESS:
         if (MOTOR_IS_ON()) {
             MOTOR_OFF();
-        } else if (locked) {
+        } else if (IRTIM_CarrierEnabled()) {
+            IRTIM_DisableCarrier();
+            GFX_ClearRect(12, 0, 19, 0);
+        }else if (locked) {
             AttemptToUnlock(signal);
         } else {
             retCode = AppRetCode_EXIT;

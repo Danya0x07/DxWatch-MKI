@@ -56,6 +56,7 @@ extern struct Application appAlarm;
 extern struct Application appDateTime;
 extern struct Application appIrrecv;
 extern struct Application appIrsend;
+extern struct Application appIrddos;
 
 extern struct Application *const APP_LIST[];
 extern const int APP_NUM;
