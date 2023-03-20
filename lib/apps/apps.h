@@ -55,6 +55,7 @@ extern struct Application appMenu;
 extern struct Application appAlarm;
 extern struct Application appDateTime;
 extern struct Application appIrrecv;
+extern struct Application appIrsend;
 
 extern struct Application *const APP_LIST[];
 extern const int APP_NUM;
@@ -67,6 +68,7 @@ extern const char *const LAYOUT_VOLTAGE;
 extern const struct GfxImage IMG_USBSIGN;
 extern const struct GfxImage IMG_LOCK;
 extern const struct GfxImage IMG_ALARM;
+extern const struct GfxImage IMG_DDOS;
 
 void AppDummyCallback(void);
 
@@ -79,8 +81,8 @@ uint8_t CalculatePageBounds(uint8_t index, uint8_t maxIndex, uint8_t numPages, u
 void DrawOptions(uint8_t index, uint8_t maxIndex, uint8_t *prevPage, void (*DrawOption)(uint8_t idx));
 void DrawMarker(uint8_t index);
 
-void SaveDateTime(const LL_RTC_DateTypeDef *date, const LL_RTC_TimeTypeDef *time);
-void LoadDateTime(LL_RTC_DateTypeDef *date, LL_RTC_TimeTypeDef *time);
+//void SaveDateTime(const LL_RTC_DateTypeDef *date, const LL_RTC_TimeTypeDef *time);
+//void LoadDateTime(LL_RTC_DateTypeDef *date, LL_RTC_TimeTypeDef *time);
 void SaveAlarmTime(uint8_t slot, const LL_RTC_TimeTypeDef *time);
 void LoadAlarmTime(uint8_t slot, LL_RTC_TimeTypeDef *time);
 void SaveIRData(uint8_t slot);

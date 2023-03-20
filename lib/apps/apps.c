@@ -13,6 +13,7 @@ struct Application *const APP_LIST[] = {
     &appDateTime,
     &appAlarm,
     &appIrrecv,
+    &appIrsend,
 };
 
 const int APP_NUM = sizeof(APP_LIST) / sizeof(APP_LIST[0]);
@@ -38,6 +39,12 @@ const struct GfxImage IMG_LOCK = {
 
 const struct GfxImage IMG_ALARM = {
     .bitmap = (uint8_t[]){0x78, 0x4C, 0x87, 0xA5, 0x97, 0x4C, 0x78},
+    .widthPx = 7,
+    .heightPg = 1
+};
+
+const struct GfxImage IMG_DDOS = {
+    .bitmap = (uint8_t[]){0x24, 0x12, 0x49, 0x69, 0x49, 0x12, 0x24},
     .widthPx = 7,
     .heightPg = 1
 };

@@ -2,8 +2,6 @@
 #include <builtin_led.h>
 #include <ir_raw.h>
 #include <ir_nec.h>
-#include <FreeRTOS.h>
-#include <task.h>
 #include <stdio.h>
 
 void DrawOption(uint8_t index)
@@ -114,6 +112,10 @@ static AppRetCode_t process(AppSignal_t signal, void *io)
 
     case AppSignal_RTCALARM:
         GFX_DrawImage(6, 0, &IMG_ALARM);
+        break;
+    
+    case AppSignal_SUSPEND:
+        retCode = AppRetCode_STAYUP;
         break;
     
     default: break;

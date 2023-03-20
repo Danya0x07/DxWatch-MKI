@@ -5,6 +5,7 @@
 #include "display.h"
 #include "builtin_led.h"
 #include "eeprom.h"
+#include "irtim.h"
 
 #include <FreeRTOS.h>
 #include <task.h>
@@ -225,10 +226,11 @@ void Callback_Shutdown(TimerHandle_t timer)
 
 static bool PowerOnSelfTest(void)
 {
+    Button0_DisableInterrupt();
     DISPLAY_Init();
     EEPROM_Init();
     EEPROM_SetProtection(true);
-    Button0_DisableInterrupt();
+    IRTIM_SetCarrierFrequency(38);
 
     if (!LL_GPIO_IsInputPinSet(IR_EYE_GPIO_Port, IR_EYE_Pin)) {
         ReportError("EYE");
