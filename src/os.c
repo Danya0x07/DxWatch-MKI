@@ -27,7 +27,7 @@ QueueHandle_t queueSystemEvents;
 
 void vApplicationIdleHook(void)
 {
-    // TODO
+    HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);
 }
 
 static void ReportError(const char *msg)

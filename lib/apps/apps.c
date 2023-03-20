@@ -15,6 +15,7 @@ struct Application *const APP_LIST[] = {
     &appIrrecv,
     &appIrsend,
     &appIrddos,
+    &appVibro,
 };
 
 const int APP_NUM = sizeof(APP_LIST) / sizeof(APP_LIST[0]);
